@@ -117,7 +117,7 @@ var Yonder = Yonder || {};
       }
     }),
 
-//Gisgraphy
+    //Gisgraphy
     Y.GeocoderModel.extend({
       //Include a unique geocoder name for display
       type: 'Gisgraphy',
@@ -155,16 +155,25 @@ var Yonder = Yonder || {};
         var spacesRe = / {2,}/g,
           normalRes = {
             'Address': [res.formatedFull].join(' ').replace(spacesRe, ' ').trim(),
-            'Longitude': parseFloat(res.lng),
-            'Latitude': parseFloat(res.lat),
+            'LatLng': [parseFloat(res.lat), parseFloat(res.lng)],
+            // 'Longitude': parseFloat(res.lng),
+            // 'Latitude': parseFloat(res.lat),
             'Quality': res.geocodingLevel,
             'Raw': JSON.stringify(res, null, ' '),
-            'provider':'gisgraphy'
+            // 'provider':'gisgraphy'
+            
+            // 'Address': loc.name,
+            // 'LatLng': [parseFloat(feature.geometry.y), parseFloat(feature.geometry.x)],
+            // 'Quality': feature.attributes.Score,
+            // 'Raw': JSON.stringify(loc, null, ' ')            
+            
+            
           };
 
         return normalRes;
       }
     }),
+
   ];
 
   Y.GeocoderCollection = Backbone.Collection.extend({
