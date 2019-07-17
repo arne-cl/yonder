@@ -117,6 +117,54 @@ var Yonder = Yonder || {};
       }
     }),
 
+//Gisgraphy
+    Y.GeocoderModel.extend({
+      //Include a unique geocoder name for display
+      type: 'Gisgraphy',
+      name: 'Gisgraphy',
+      color: '#984EA3',
+      // Geocode the address and call success or error when complete
+      geocode: function(addr) {
+        var model = this;
+
+        try {
+          $.ajax({
+            dataType: 'jsonp',
+            data: {
+              address: addr,
+              format: 'json',
+              country: $('#countrylist').val()
+            },
+            url: 'https://services.gisgraphy.com/geocoding/geocode',
+            success: function (res) {
+              if (res.numFound && res.numFound > 0) {
+                  model.set(model.parse(res.result[0]));
+              } else {
+                model.set({'Error': 'No results.'});
+              }
+            }
+          });
+        } catch (e) {
+          model.set({'Error': 'Error parsing results.'});
+        }
+
+      },
+      // Override parse to set normalized attributes for display.
+      // The res param is the raw respsone from the geocoder
+      parse: function(res) {
+        var spacesRe = / {2,}/g,
+          normalRes = {
+            'Address': [res.formatedFull].join(' ').replace(spacesRe, ' ').trim(),
+            'Longitude': parseFloat(res.lng),
+            'Latitude': parseFloat(res.lat),
+            'Quality': res.geocodingLevel,
+            'Raw': JSON.stringify(res, null, ' '),
+            'provider':'gisgraphy'
+          };
+
+        return normalRes;
+      }
+    }),
   ];
 
   Y.GeocoderCollection = Backbone.Collection.extend({
