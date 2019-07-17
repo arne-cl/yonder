@@ -156,18 +156,8 @@ var Yonder = Yonder || {};
           normalRes = {
             'Address': [res.formatedFull].join(' ').replace(spacesRe, ' ').trim(),
             'LatLng': [parseFloat(res.lat), parseFloat(res.lng)],
-            // 'Longitude': parseFloat(res.lng),
-            // 'Latitude': parseFloat(res.lat),
             'Quality': res.geocodingLevel,
             'Raw': JSON.stringify(res, null, ' '),
-            // 'provider':'gisgraphy'
-            
-            // 'Address': loc.name,
-            // 'LatLng': [parseFloat(feature.geometry.y), parseFloat(feature.geometry.x)],
-            // 'Quality': feature.attributes.Score,
-            // 'Raw': JSON.stringify(loc, null, ' ')            
-            
-            
           };
 
         return normalRes;
